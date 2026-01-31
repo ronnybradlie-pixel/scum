@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="your-song.mp3" type="audio/mpeg">
+    </audio>
+
+    
+    <div class="content">
+        <h1>Will you be my Valentine?</h1>
+    </div>
+
+    <div class="card-container">
+        <div class="card">
+            <img src="b3.jpeg" alt="Memory 1">
+            <div class="card-text">Every moment... <br>my favourite one</div>
+        </div>
+        <div class="card">
+            <img src="b2.jpeg" alt="Memory 2">
+            <div class="card-text">with you...<br>cloock iiiiit</div>
+        </div>
+        <div class="card">
+            <img src="b1.jpeg" alt="Memory 3">
+            <div class="card-text">is a dream ❤️ <br>please say yes</div>
+        </div>
+    </div>
+        
+        <div class="btn-container">
+            <button id="yesBtn" onclick="celebrate()">YES!</button>
+            <button id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+
+    <script>
+        // Floating hearts animation
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 4000);
+        }
+        setInterval(createHeart, 300);
+
+        // Runaway "No" button
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            btn.style.position = 'fixed';
+            const maxWidth = window.innerWidth - btn.offsetWidth - 50;
+            const maxHeight = window.innerHeight - btn.offsetHeight - 50;
+            btn.style.left = Math.random() * maxWidth + 'px';
+            btn.style.top = Math.random() * maxHeight + 'px';
+        }
+
+        // Success function
+        function celebrate() {
+            // Play Music
+            document.getElementById('bgMusic').play();
+
+            // Confetti Burst
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ffffff', '#ffb3c1']
+            });
+
+            // Update UI
+            document.querySelector('h1').innerHTML = "I knew you'd say yes! ❤️";
+            document.getElementById('noBtn').style.display = 'none';
+            document.getElementById('yesBtn').innerHTML = "Redirecting...";
+
+            // WhatsApp Redirect after 2 seconds
+            setTimeout(() => {
+                const phoneNumber = "254769311396"; // Format: 254700000000
+                const message = "Yes! I will be your Valentine! ❤️";
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.location.href = whatsappUrl;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
